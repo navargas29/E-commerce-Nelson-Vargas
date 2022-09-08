@@ -71,10 +71,12 @@ header{
     box-shadow:-2 0 4px hsl(0, 4%, 15% / 10%);
     margin-top: 7.4rem;
     transition: 0.2s;
-    
+    height: 100vh;
+    overflow: scroll;   
 }
 .cart.active{
     right:0;
+    
      
 }
 

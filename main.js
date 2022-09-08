@@ -86,36 +86,57 @@ function addCartClicked(event){
     let title = shopProducts.getElementsByClassName("product-title")[0].innerText;
     let price = shopProducts.getElementsByClassName("price")[0].innerText;
     let productImg = shopProducts.getElementsByClassName("product-img")[0].src;
-    addProductToCart(title, price,productImg);
+    let id = shopProducts.id;
+    //console.log(id);
+    addProductToCart(title, price,productImg,id);
     updatetotal();
 }
 
 
+let cartArray = [];
+function addProductToCart(title,price,productImg,id){
+    let product = {
+        title:title,
+        price:price,
+        productImg:productImg,
+        id:id
+    }
+   
 
-function addProductToCart(title,price,productImg){
-    let cartShopBox = document.createElement("div");
-    cartShopBox.classList.add("cart-box");
-    let cartItems = document.getElementsByClassName("cart-content")[0];
-    let cartItemsNames = cartItems.getElementsByClassName("cart-product-title");
-    for ( let i = 0; i < cartItemsNames.length; i++){
+    let procutExist = cartArray.find((item)=>item.id ===id);
+
+    console.log(procutExist);
+
+    if (cartArray.find((item)=>item.id ===id)) {
         
-    }//!alert("Ya agregaste este articulo al carrito"); 
-         
+        let amountItem = document.getElementById("amount"+id);
+        amountItem.value++
+        
+    } else {
+       
+        cartArray.push(product);
+        let cartShopBox = document.createElement("div");
+        cartShopBox.classList.add("cart-box");
+        let cartItems = document.getElementsByClassName("cart-content")[0];
+        let cartItemsNames = cartItems.getElementsByClassName("cart-product-title");
+        for ( let i = 0; i < cartItemsNames.length; i++){
+            
+        }//!alert("Ya agregaste este articulo al carrito"); 
+             
+        let cartBoxContent = `
+                            <img src="${productImg}" alt="" class="cart-img" />
+                            <div class="details-box">
+                                <div class="cart-product-title">${title}</div>
+                                <div class="cart-price">${price}</div>
+                                <input type="number" id="amount${id}" value="1" class="cart-quantity" />
+                            </div>
+                            <i class="bx bxs-trash-alt cart-remove"></i>`;
+    cartShopBox.innerHTML = cartBoxContent;
+    cartItems.append(cartShopBox);
+    cartShopBox.getElementsByClassName("cart-remove")[0].addEventListener("click", removeCartItem);
+    cartShopBox.getElementsByClassName("cart-quantity")[0].addEventListener("change", quantityChanged);
     
-
-
-let cartBoxContent = `
-                        <img src="${productImg}" alt="" class="cart-img" />
-                        <div class="details-box">
-                            <div class="cart-product-title">${title}</div>
-                            <div class="cart-price">${price}</div>
-                            <input type="number" value="1" class="cart-quantity" />
-                        </div>
-                        <i class="bx bxs-trash-alt cart-remove"></i>`;
-cartShopBox.innerHTML = cartBoxContent;
-cartItems.append(cartShopBox);
-cartShopBox.getElementsByClassName("cart-remove")[0].addEventListener("click", removeCartItem);
-cartShopBox.getElementsByClassName("cart-quantity")[0].addEventListener("change", quantityChanged);
+    }
 
 }
 

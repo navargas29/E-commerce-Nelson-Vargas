@@ -71,10 +71,19 @@ function buyButtonClicked(){
 
 function removeCartItem(event){
     let buttonClicked = event.target;
-    console.log(buttonClicked.id)
+    let idRemove = buttonClicked.id.slice(6) ;
     buttonClicked.parentElement.remove();
     updatetotal();
-    printNumberCart(cartArray);
+    //console.log(idRemove);
+    
+    for (let i = 0; i < cartArray.length; i++) {
+        if(cartArray[i].id==idRemove){
+            cartArray.splice(i,1);
+        }
+        
+    }
+    //printNumberCart(cartArray);
+    console.log(cartArray);
 }
 
 //quantity changes 
@@ -96,14 +105,14 @@ function addCartClicked(event){
     //console.log(id);
     addProductToCart(title, price,productImg,id);
     updatetotal();
-    printNumberCart(cartArray);
+    //printNumberCart(cartArray);
 }
 
 
-function printNumberCart(cartArray){
+/* function printNumberCart(cartArray){
     contadorItems.textContent = cartArray.length;
    console.log(cartArray.length); 
-}
+} */
 
 
 
@@ -119,12 +128,16 @@ function addProductToCart(title,price,productImg,id){
 
     let procutExist = cartArray.find((item)=>item.id ===id);
 
-    console.log(procutExist);
+  
 
     if (cartArray.find((item)=>item.id ===id)) {
         
         let amountItem = document.getElementById("amount"+id);
-        amountItem.value++
+        
+         if (amountItem.value) {
+            amountItem.value++;
+        } 
+        
         
     } else {
        
@@ -144,7 +157,7 @@ function addProductToCart(title,price,productImg,id){
                                 <div class="cart-price">${price}</div>
                                 <input type="number" id="amount${id}" value="1" class="cart-quantity" />
                             </div>
-                            <i class="bx bxs-trash-alt cart-remove" id="delete${id}"></i>`;
+                            <i class="bx bxs-trash-alt cart-remove" id="remove${id}"></i>`;
     cartShopBox.innerHTML = cartBoxContent;
     cartItems.append(cartShopBox);
     cartShopBox.getElementsByClassName("cart-remove")[0].addEventListener("click", removeCartItem);
@@ -154,9 +167,6 @@ function addProductToCart(title,price,productImg,id){
 
 }
 
-
-
-//update  total
 
 function updatetotal(){
     let cartContent = document.getElementsByClassName("cart-content")[0];

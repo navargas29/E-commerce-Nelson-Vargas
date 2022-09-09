@@ -3,6 +3,10 @@ let cartIcon = document.querySelector("#cart-icon");
 let cart = document.querySelector(".cart");
 let closeCart = document.querySelector("#close-cart");
 
+
+const contadorItems = document.querySelector("#contadorItems")
+
+
 //open cart
 cartIcon.onclick = () =>{
     cart.classList.add("active");
@@ -67,8 +71,10 @@ function buyButtonClicked(){
 
 function removeCartItem(event){
     let buttonClicked = event.target;
+    console.log(buttonClicked.id)
     buttonClicked.parentElement.remove();
     updatetotal();
+    printNumberCart(cartArray);
 }
 
 //quantity changes 
@@ -79,7 +85,7 @@ function quantityChanged(event) {
     }  
     updatetotal();
 }
-//! Add to cart  xxxxxxxxxxxxxx
+// Add to cart  
 function addCartClicked(event){
     let button = event.target;
     let shopProducts = button.parentElement;
@@ -90,7 +96,15 @@ function addCartClicked(event){
     //console.log(id);
     addProductToCart(title, price,productImg,id);
     updatetotal();
+    printNumberCart(cartArray);
 }
+
+
+function printNumberCart(cartArray){
+    contadorItems.textContent = cartArray.length;
+   console.log(cartArray.length); 
+}
+
 
 
 let cartArray = [];
@@ -121,7 +135,7 @@ function addProductToCart(title,price,productImg,id){
         let cartItemsNames = cartItems.getElementsByClassName("cart-product-title");
         for ( let i = 0; i < cartItemsNames.length; i++){
             
-        }//!alert("Ya agregaste este articulo al carrito"); 
+        } 
              
         let cartBoxContent = `
                             <img src="${productImg}" alt="" class="cart-img" />
@@ -130,7 +144,7 @@ function addProductToCart(title,price,productImg,id){
                                 <div class="cart-price">${price}</div>
                                 <input type="number" id="amount${id}" value="1" class="cart-quantity" />
                             </div>
-                            <i class="bx bxs-trash-alt cart-remove"></i>`;
+                            <i class="bx bxs-trash-alt cart-remove" id="delete${id}"></i>`;
     cartShopBox.innerHTML = cartBoxContent;
     cartItems.append(cartShopBox);
     cartShopBox.getElementsByClassName("cart-remove")[0].addEventListener("click", removeCartItem);
@@ -163,3 +177,5 @@ function updatetotal(){
         document.getElementsByClassName("total-price")[0].innerText = "$" + total;
     
 }
+
+

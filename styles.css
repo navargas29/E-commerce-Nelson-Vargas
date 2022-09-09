@@ -62,22 +62,34 @@ header{
 }
 .cart{
     position: fixed;
-    top: 0;
+    top: 7.4rem;
     right: -100%;
     width: 360px;
-    min-height: 100vh;
+    height: calc(100vh - 7.4rem);
     padding: 20px;
     background: var(--bg-color);
     box-shadow:-2 0 4px hsl(0, 4%, 15% / 10%);
-    margin-top: 7.4rem;
     transition: 0.2s;
-    height: 100vh;
-    overflow: scroll;   
+      
 }
 .cart.active{
     right:0;
     
      
+}
+.cart-content{
+    overflow-y: scroll;
+    height: 80%;
+}
+.contador-carrito span{
+    position: relative;
+    top: -2rem;
+    right: 0.5rem;
+    display: flex;
+    align-items:flex-start;
+    justify-content:left;
+    color: #fd4646;
+    
 }
 
 .cart-title{
@@ -127,9 +139,13 @@ header{
 }
 .total{
     display: flex;
-    justify-content: flex-end;
     border-top: 1px solid var(--text-color);
     margin-top: 1rem;
+    height: 20%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2rem;
 }
 .total-title{
     font-size: 1rem;
